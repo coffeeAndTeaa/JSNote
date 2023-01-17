@@ -28,8 +28,17 @@ export const unpkgPathPlugin = (inputCode: string) => {
           return { path: args.path, namespace: 'a' };
         }
 
-        // 处理从相对路径引入文件的情况
-        // args.resolveDir表示当前的子目录
+        // 这种方式难以处理nested的情况
+        // if (args.path.includes('./') || args.path.includes('../')) {
+        //   return {
+        //     namespace: 'a',
+        //     path: new URL(args.path, args.importer + '/').href
+        //   }
+        // }
+
+        // 处理nested逻辑的算法
+        // https://unpkg.com + args.path     +  args.resolveDir
+        //   库的位置 + 文件的引入语句  +  父文件所在的位置 + 
         if (args.path.includes('./') || args.path.includes('../')) {
           return {
             namespace: 'a',
@@ -78,7 +87,7 @@ export const unpkgPathPlugin = (inputCode: string) => {
         const result: esbuild.OnLoadResult =  {
           loader: 'jsx',
           contents: data,
-          resolveDir: new URL('./', request.responseURL).pathname,
+          resolveDir: new URL('./', request.responseURL).pathname, // 我们找到当前文件的路径为了处理nested情况
         };
 
         await fileCache.setItem(args.path, result);
