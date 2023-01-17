@@ -39,7 +39,7 @@ const App = () => {
       bundle: true,
       write: false,
       // plugins: [unpkgPathPluginChina(input)],
-      // 在中国uncomment 这一行代码
+      // 在中国uncomment 这一行代码, 并注释掉原来的plugin，注意有些包中国的镜像没有
       plugins: [unpkgPathPlugin(), fetchPlugin(input)],
       define: {
         'process.env.NODE_ENV': '"production"',
