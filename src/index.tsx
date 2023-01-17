@@ -1,7 +1,7 @@
 import React,{useState, useRef, useEffect} from "react";
 import { createRoot } from 'react-dom/client';
 import * as esbuild from 'esbuild-wasm'; // compiled go code for esbuild
-import { unpkgPathPlugin } from "./plugins/unpkg-path-plugin";
+import { unpkgPathPlugin } from "./plugins/unpkg-path-plugin-china";
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
@@ -46,14 +46,14 @@ const App = () => {
     setCode(result.outputFiles[0].text);
   }
 
-  return (<>
+  return (<div>
     <textarea onChange={handleTextChange} value={input}>
     </textarea>
     <div>
       <button onClick={handleClick}>submit</button>
     </div>
-    <pre>{code}</pre>
-  </>);
+    <pre style={{width: 100, height: 70 }}>{code}</pre>
+  </div>);
 }
 
 root.render(<App/>);
