@@ -7,7 +7,7 @@ const fileCache = localforage.createInstance({
 });
 
 
-export const unpkgPathPlugin = (inputCode: string) => {
+export const unpkgPathPluginChina = (inputCode: string) => {
   return {
     name: 'unpkg-path-plugin',
     setup(build: esbuild.PluginBuild) {
