@@ -5,6 +5,8 @@ import { unpkgPathPluginChina } from "./plugins/unpkg-path-plugin-china";
 import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 import { fetchPlugin } from './plugins/fetch-plugin';
 import CodeEditor from "./components/code-editor";
+import "bulmaswatch/darkly/bulmaswatch.min.css";
+// import 'bulmaswatch/superhero/bulmaswatch.min.css';
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
