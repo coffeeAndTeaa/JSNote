@@ -34,6 +34,7 @@ const App = () => {
       return;
     }
 
+    iframeRef.current.srcdoc = html;
     // 使用esbuild来处理输入
     const result = await ref.current.build({
       entryPoints: ['index.js'],
@@ -47,10 +48,12 @@ const App = () => {
         global: 'window',
       },
     });
-
+    
+    // 把转译打包好的代码发送到iframe中去
     iframeRef.current.contentWindow.postMessage(result.outputFiles[0].text, '*');
   }
-
+ 
+  // iframe 的模版代码
   const html = `
     <html>
       <head></head>
