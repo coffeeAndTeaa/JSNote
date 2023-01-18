@@ -4,6 +4,7 @@ import * as esbuild from 'esbuild-wasm'; // compiled go code for esbuild
 import { unpkgPathPluginChina } from "./plugins/unpkg-path-plugin-china";
 import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 import { fetchPlugin } from './plugins/fetch-plugin';
+import CodeEditor from "./components/code-editor";
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
@@ -75,13 +76,14 @@ const App = () => {
   `;
 
   return (<div>
+    <CodeEditor initialValue="const a = 1;" onChange={(value) => setInput(value)}/>
     <textarea onChange={handleTextChange} value={input}>
     </textarea>
     <div>
       <button onClick={handleClick}>submit</button>
     </div>
     <pre style={{width: 100, height: 70 }}>{code}</pre>
-    <iframe ref={iframeRef} sandbox="allow-scripts" srcDoc={html}></iframe>
+    <iframe title="preview window" ref={iframeRef} sandbox="allow-scripts" srcDoc={html}></iframe>
   </div>);
 }
 
