@@ -7,12 +7,13 @@ import Resizable from "./resizable";
 const CodeCell = () => {
   const [input, setInput] = useState<string>("");
   const [code, setCode] = useState<string>("");
-
+  const [err, setErr] = useState<string>("");
   //添加debounce
   useEffect(() => {
     const timer = setTimeout(async () => {
       const output = await bundle(input);
-      setCode(output);
+      setCode(output.code);
+      setErr(output.err);
     }, 750);
 
     return () => {
@@ -32,7 +33,7 @@ const CodeCell = () => {
         {/* <div>
           <button onClick={handleClick}>submit</button>
         </div> */}
-        <PreviewWindow code={code} />
+        <PreviewWindow code={code} err={err} />
       </div>
     </Resizable>
   );
