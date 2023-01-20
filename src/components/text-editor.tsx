@@ -1,11 +1,17 @@
 import MDEditor from "@uiw/react-md-editor";
 import "./text-editor.css";
 import { useState, useEffect, useRef } from "react";
+import { Cell } from "../state";
+import { useActions } from "../hooks/use-actions";
 
-const TextEditor: React.FC = () => {
-  const [editing, setEditing] = useState(false);
+interface TextEditorProps {
+  cell: Cell;
+}
+
+const TextEditor: React.FC<TextEditorProps> = ({ cell }) => {
+  const [editing, setEditing] = useState(false); // 控制是否preview markdown
   const ref = useRef<HTMLDivElement | null>(null);
-  const [value, setValue] = useState("# header");
+  const { updateCell } = useActions();
 
   useEffect(() => {
     const listener = (event: MouseEvent) => {
@@ -14,10 +20,9 @@ const TextEditor: React.FC = () => {
         event.target &&
         ref.current.contains(event.target as Node)
       ) {
-        console.log("click is inside editor");
         return;
       }
-      console.log("click is outside editor");
+
       setEditing(false);
     };
 
@@ -30,7 +35,10 @@ const TextEditor: React.FC = () => {
   if (editing) {
     return (
       <div className="text-editor" ref={ref}>
-        <MDEditor value={value} onChange={(value) => setValue(value || "")} />
+        <MDEditor
+          value={cell.content}
+          onChange={(value) => updateCell(cell.id, value || "")}
+        />
       </div>
     );
   }
@@ -38,7 +46,7 @@ const TextEditor: React.FC = () => {
   return (
     <div className="text-editor card" onClick={() => setEditing(true)}>
       <div className="card-content">
-        <MDEditor.Markdown source={value} />
+        <MDEditor.Markdown source={cell.content || "单击输入笔记"} />
       </div>
     </div>
   );
